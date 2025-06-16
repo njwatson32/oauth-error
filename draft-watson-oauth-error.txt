@@ -1,0 +1,264 @@
+
+
+
+
+WG Working Group                                               N. Watson
+Internet-Draft                                               Google, LLC
+Intended status: Informational                              16 June 2025
+Expires: 18 December 2025
+
+
+                       Rich OAuth Error Responses
+                    draft-watson-oauth-error-latest
+
+Abstract
+
+   Define an error-handling protocol extension for the OAuth 2.0 token
+   endpoint that allows the authorization server or resource server to
+   specify an extra parameter on error responses that should be passed
+   through to followup authorization requests.
+
+About This Document
+
+   This note is to be removed before publishing as an RFC.
+
+   The latest revision of this draft can be found at
+   https://example.com/LATEST.  Status information for this document may
+   be found at https://datatracker.ietf.org/doc/draft-watson-oauth-
+   error/.
+
+   Discussion of this document takes place on the WG Working Group
+   mailing list (mailto:WG@example.com), which is archived at
+   https://example.com/WG.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/USER/REPO.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 18 December 2025.
+
+Copyright Notice
+
+   Copyright (c) 2025 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction
+   2.  Conventions and Definitions
+   3.  Error Responses
+     3.1.  Token endpoint
+     3.2.  Bearer authentication scheme
+     3.3.  error_state considerations
+   4.  Security Considerations
+   5.  IANA Considerations
+   6.  Normative References
+   Acknowledgments
+   Author's Address
+
+1.  Introduction
+
+   OAuth 2.0 [RFC 6749] and [RFC 6750] define several different error
+   codes that authorization servers and resource servers may return.  On
+   token endpoint calls, most most runtime errors are lumped into
+   invalid_grant, with the rest of the errors indicating a coding or
+   configuration error by the client.  Similarly, invalid_token covers
+   most runtime errors on resource server calls.
+
+   Given the changing security, privacy, and regulatory landscapes since
+   OAuth 2.0 was released, many authorization servers have new types of
+   error conditions, such as:
+
+   *  Authentication freshness or strength requirements (e.g. step-up
+      auth, reauth)
+
+   *  Applications which can be disabled or restricted
+
+   *  User account types which have reduced capabilities (e.g.
+      Enterprise accounts)
+
+   *  TODO more?
+
+   In the common case, these errors are likely to appear at
+   authorization time, when the user is present to see and/or address
+   them.  However, in some circumstances, these errors could result in
+   failures at refresh token exchange or access token usage.  In this
+   situation, the error codes defined by the original OAuth 2.0 spec are
+   insufficiently expressive to address these different error scenarios.
+   The error_description parameter also cannot cover errors that:
+
+   *  Need to display richer detail (e.g. explain to user why account is
+      blocked)
+
+   *  Contain sensitive data (e.g. account has been flagged as underage)
+
+   Because the user is not always be present when the client receives an
+   error from the authorization or resource server, there needs to be
+   some way to preserve error state until the user is present again.
+   Simply returning invalid_grant so that the client reattempts the
+   authorization flow has a few downsides:
+
+   *  Some clients may not automatically restart authorization and
+      instead render a button to do so.  In this case the user has no
+      explanation for why they're suddenly signed out of the client.
+
+   *  It may result in unnecessary UX if the user needs to complete some
+      preliminary auth steps in order to reach the error state (e.g.
+      sign in or account selection for authorization servers that
+      support multiple login).
+
+   *  invalid_grant is semantically the wrong error code for many error
+      conditions.
+
+   This specification extends OAuth to allow for authorization servers
+   and resource servers to return an extra parameter which can be passed
+   back to the authorization server when the user is present in order to
+   provide a richer error experience which may even allow for recovery
+   by the user.
+
+2.  Conventions and Definitions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+3.  Error Responses
+
+3.1.  Token endpoint
+
+   TODO: also add access_denied to token endpoint?  IMO it should be
+   there but it also feels a little "tacked on" here.
+
+   When returning an error response from the token endpoint, the
+   authorization server MAY return an additional parameter with any
+   error code.
+
+error_state
+    Indicates that the client SHOULD initiate a new authorization grant flow
+    and add this parameter unmodified as the error_state parameter there.
+
+   In this case, error_state is a private contract wholly within the
+   authorization server, so its details are out of scope for this
+   specification.
+
+3.2.  Bearer authentication scheme
+
+   This specification defines the following WWW-Authenticate auth-param
+   value, which may be presented alongside any error code.
+
+error_state
+    Indicates that the client SHOULD initiate a new authorization grant flow
+    and add this parameter unmodified as the error_state parameter there.
+
+   Typically error_state would be obtained from the authorization server
+   as part of access token validation, in which case error_state is
+   again a private contract wholly within the authorization server.  If
+   access tokens are statelessly validated (e.g. using an authorization
+   server public key), then any error other than "invalid credential"
+   could only come from the resource server, and the authorization
+   server will need to understand the error_state generated by the
+   resource server.  Due to the diverse nature of potential errors, the
+   format of a resource-server-generated error_state is out of scope for
+   this spec.  (TODO: Is that fine to put out of scope?)
+
+3.3.  error_state considerations
+
+   If the client is not running in a context where it can initiate an
+   authorization grant flow (e.g. a workflow running on some cloud VM),
+   it MAY transmit the error_state parameter to the system that can.
+
+   It is RECOMMENDED that error_state be opaque to the client, though
+   clients MUST NOT introspect the parameter regardless.  If error_state
+   contains any user data, it MUST be encrypted.  It is RECOMMENDED that
+   error_state contains a timestamp and the authorization server defines
+   a reasonable timeframe in which it must be used.  The authorization
+   server MUST ignore an expired error_state parameter (though it is
+   entirely possible that the same error will be re-encountered during a
+   fresh authorization grant flow).
+
+   (TODO: Probably gonna delete this paragraph.  Limited upside and huge
+   downside.) error_state MAY contain a user identifier which can be
+   used to display a personalized error page even if the user is not
+   already signed into the authorization server, but it MUST NOT be
+   usable to access any user data or take any user account action that
+   is not within the scope of the originally issued refresh token.
+   (Doing otherwise would allow privilege escalation for applications.)
+
+   The authorization server and resource server MAY use error_state to
+   represent both recoverable and non-recoverable errors.  Examples of
+   recoverable errors could include step-up auth or re-acknowledgment of
+   updated terms of service.  Examples of non-recoverable errors could
+   include account or API disables where the authorization server needs
+   to communicate some information to the user.
+
+   It is NOT RECOMMENDED to distinguish between recoverable and non-
+   recoverable errors to the client, as it potentially leaks sensitive
+   information to the client.  (Signals that should be shared for
+   security and abuse reasons should use the protocols defined in
+   [OpenID SSF].)
+
+   [The same normative language applies here too.  Do I copy-paste?]
+
+4.  Security Considerations
+
+   TODO Security TODO Risk of attaching error_state to URL for different
+   user.  TODO emails TODO why no whole URL?
+
+5.  IANA Considerations
+
+   TODO IANA
+
+6.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC6749]  Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
+              RFC 6749, DOI 10.17487/RFC6749, October 2012,
+              <https://www.rfc-editor.org/rfc/rfc6749>.
+
+   [RFC6750]  Jones, M. and D. Hardt, "The OAuth 2.0 Authorization
+              Framework: Bearer Token Usage", RFC 6750,
+              DOI 10.17487/RFC6750, October 2012,
+              <https://www.rfc-editor.org/rfc/rfc6750>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+Acknowledgments
+
+   TODO acknowledge.
+
+Author's Address
+
+   Nicholas Watson
+   Google, LLC
+   Email: nwatson@google.com
