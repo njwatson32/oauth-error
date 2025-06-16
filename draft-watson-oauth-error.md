@@ -49,6 +49,8 @@ author:
     email: nwatson@google.com
 
 normative:
+  RFC6749:
+  RFC6750:
 
 informative:
 
