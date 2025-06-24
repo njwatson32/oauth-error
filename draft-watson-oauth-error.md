@@ -32,6 +32,7 @@ normative:
   RFC6749:
   RFC6750:
   RFC7516:
+  RFC7519:
   RFC8414:
   RFC9126:
 
