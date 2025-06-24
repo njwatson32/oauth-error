@@ -12,13 +12,13 @@ that allows the authorization server or resource server to specify an extra
 parameter on error responses that should be passed through to followup
 authorization requests. 
     " name="description">
-<meta content="xml2rfc 3.28.1" name="generator">
+<meta content="xml2rfc 3.29.0" name="generator">
 <meta content="oauth" name="keyword">
 <meta content="error" name="keyword">
 <meta content="draft-watson-oauth-error-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.28.1
-    Python 3.12.10
+  xml2rfc 3.29.0
+    Python 3.12.11
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
@@ -27,7 +27,7 @@ authorization requests.
     platformdirs 4.3.8
     pycountry 24.6.1
     PyYAML 6.0.2
-    requests 2.32.3
+    requests 2.32.4
     setuptools 80.9.0
     wcwidth 0.2.13
 -->
@@ -1052,7 +1052,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Watson</td>
-<td class="center">Expires 18 December 2025</td>
+<td class="center">Expires 26 December 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1060,17 +1060,17 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <div id="internal-metadata" class="document-information">
 <dl id="identifiers">
 <dt class="label-workgroup">Workgroup:</dt>
-<dd class="workgroup">WG Working Group</dd>
+<dd class="workgroup">Web Authorization Protocol</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
 <dd class="internet-draft">draft-watson-oauth-error-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-06-16" class="published">16 June 2025</time>
+<time datetime="2025-06-24" class="published">24 June 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-12-18">18 December 2025</time></dd>
+<dd class="expires"><time datetime="2025-12-26">26 December 2025</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1094,14 +1094,15 @@ authorization requests.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
       </h2>
 <p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
 <p id="section-note.1-2">
-        The latest revision of this draft can be found at <span><a href="https://example.com/LATEST">https://example.com/LATEST</a></span>.
+        The latest revision of this draft can be found at <span><a href="https://njwatson32.github.io/oauth-error/draft-watson-oauth-error.html">https://njwatson32.github.io/oauth-error/draft-watson-oauth-error.html</a></span>.
         Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-watson-oauth-error/">https://datatracker.ietf.org/doc/draft-watson-oauth-error/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
 <p id="section-note.1-3">
         Discussion of this document takes place on the
-        WG Working Group mailing list (<span><a href="mailto:WG@example.com">mailto:WG@example.com</a></span>),
-        which is archived at <span><a href="https://example.com/WG">https://example.com/WG</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+        Web Authorization Protocol Working Group mailing list (<span><a href="mailto:oauth@ietf.org">mailto:oauth@ietf.org</a></span>),
+        which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/oauth/">https://mailarchive.ietf.org/arch/browse/oauth/</a></span>.
+        Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/oauth/">https://www.ietf.org/mailman/listinfo/oauth/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
 <p id="section-note.1-4">Source for this draft and an issue tracker can be found at
-        <span><a href="https://github.com/USER/REPO">https://github.com/USER/REPO</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+        <span><a href="https://github.com/njwatson32/oauth-error">https://github.com/njwatson32/oauth-error</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1122,7 +1123,7 @@ authorization requests.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 18 December 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 26 December 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1155,36 +1156,50 @@ authorization requests.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
             <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
+            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-motivating-use-cases" class="internal xref">Motivating Use Cases</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-error-responses" class="internal xref">Error Responses</a></p>
+            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-error-responses" class="internal xref">Error Responses</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
-                <p id="section-toc.1-1.3.2.1.1" class="keepWithNext"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-token-endpoint" class="internal xref">Token endpoint</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-token-endpoint" class="internal xref">Token endpoint</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-bearer-authentication-schem" class="internal xref">Bearer authentication scheme</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-bearer-authentication-schem" class="internal xref">Bearer authentication scheme</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.1">
+                    <p id="section-toc.1-1.4.2.2.2.1.1"><a href="#section-4.2.1" class="auto internal xref">4.2.1</a>.  <a href="#name-resource-server-error_state" class="internal xref">Resource server <code>error_state</code> JWT</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
-                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-error_state-considerations" class="internal xref">error_state considerations</a></p>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3">
+                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-error_state-considerations" class="internal xref"><code>error_state</code> considerations</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.4">
+                <p id="section-toc.1-1.4.2.4.1"><a href="#section-4.4" class="auto internal xref">4.4</a>.  <a href="#name-new-error-codes" class="internal xref">New error codes</a></p>
 </li>
             </ul>
 </li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
-</li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-authorization-grant-request" class="internal xref">Authorization Grant Request</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
-            <p id="section-toc.1-1.8.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
 </li>
         </ul>
 </nav>
@@ -1195,186 +1210,263 @@ authorization requests.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">OAuth 2.0 [RFC 6749] and [RFC 6750] define several different error codes that
+<p id="section-1-1">OAuth 2.0 <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> and <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span> define several different error codes that
 authorization servers and resource servers may return. On token endpoint calls,
 most most runtime errors are lumped into invalid_grant, with the rest of the
 errors indicating a coding or configuration error by the client. Similarly,
 invalid_token covers most runtime errors on resource server calls.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">Given the changing security, privacy, and regulatory landscapes since OAuth 2.0
 was released, many authorization servers have new types of error conditions,
-such as:<a href="#section-1-2" class="pilcrow">¶</a></p>
+which may be too complex to adequately describe in a JSON response.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">This specification extends OAuth to allow for authorization servers and resource
+servers to return an extra parameter which can be passed back to the
+authorization server when the user is present in order to provide a richer error
+experience which may even allow for recovery by the user.<a href="#section-1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="motivating-use-cases">
+<section id="section-2">
+      <h2 id="name-motivating-use-cases">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-motivating-use-cases" class="section-name selfRef">Motivating Use Cases</a>
+      </h2>
+<p id="section-2-1">Some errors which may require a richer experience include:<a href="#section-2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-1-3.1">
-          <p id="section-1-3.1.1">Authentication freshness or strength requirements (e.g. step-up auth, reauth)<a href="#section-1-3.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-2-2.1">
+          <p id="section-2-2.1.1">User account types which have reduced capabilities (e.g. underage or
+enterprise accounts)<a href="#section-2-2.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-1-3.2">
-          <p id="section-1-3.2.1">Applications which can be disabled or restricted<a href="#section-1-3.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-2-2.2">
+          <p id="section-2-2.2.1">Applications which can be disabled or restricted<a href="#section-2-2.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-1-3.3">
-          <p id="section-1-3.3.1">User account types which have reduced capabilities (e.g. Enterprise accounts)<a href="#section-1-3.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-2-2.3">
+          <p id="section-2-2.3.1">Custom authentication strength requirements not covered by an existing spec<a href="#section-2-2.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-1-3.4">
-          <p id="section-1-3.4.1">TODO more?<a href="#section-1-3.4.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-2-2.4">
+          <p id="section-2-2.4.1">TODO more?<a href="#section-2-2.4.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-1-4">In the common case, these errors are likely to appear at authorization time,
-when the user is present to see and/or address them. However, in some circumstances,
-these errors could result in failures at refresh token exchange or access token
-usage. In this situation, the error codes defined by the original OAuth 2.0 spec are
-insufficiently expressive to address these different error scenarios. The
-error_description parameter also cannot cover errors that:<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-2-3">In the common case, errors requiring user attention are likely to appear at
+authorization time, when the user is present to see and/or address them.
+However, in circumstances where data used for access control is changed out of
+band, these errors could result in failures at refresh token exchange or access
+token usage. In this situation, the error codes defined by the original OAuth
+2.0 spec are insufficiently expressive to address these different error
+scenarios. The error_description parameter also cannot cover errors that:<a href="#section-2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-1-5.1">
-          <p id="section-1-5.1.1">Need to display richer detail (e.g. explain to user why account is blocked)<a href="#section-1-5.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-2-4.1">
+          <p id="section-2-4.1.1">Need to display richer detail (e.g. explain to user why account is blocked)<a href="#section-2-4.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-1-5.2">
-          <p id="section-1-5.2.1">Contain sensitive data (e.g. account has been flagged as underage)<a href="#section-1-5.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-2-4.2">
+          <p id="section-2-4.2.1">Contain sensitive data (e.g. account has been flagged as underage)<a href="#section-2-4.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-1-6">Because the user is not always be present when the client receives an error
-from the authorization or resource server, there needs to be some way to
-preserve error state until the user is present again. Simply returning
-invalid_grant so that the client reattempts the authorization flow has a few
-downsides:<a href="#section-1-6" class="pilcrow">¶</a></p>
+<p id="section-2-5">Because the user is not always be present when the client receives an error from
+the authorization or resource server, there needs to be some way to preserve
+error state until the user is present again. Simply returning invalid_grant so
+that the client reattempts the authorization flow has a few downsides:<a href="#section-2-5" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-1-7.1">
-          <p id="section-1-7.1.1">Some clients may not automatically restart authorization and instead render a
-button to do so. In this case the user has no explanation for why they're
-suddenly signed out of the client.<a href="#section-1-7.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-2-6.1">
+          <p id="section-2-6.1.1">Some clients may not automatically restart authorization and instead render
+a button to do so. In this case the user has no explanation for why they're
+suddenly signed out of the client.<a href="#section-2-6.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-1-7.2">
-          <p id="section-1-7.2.1">It may result in unnecessary UX if the user needs to complete some preliminary
-auth steps in order to reach the error state (e.g. sign in or account selection
-for authorization servers that support multiple login).<a href="#section-1-7.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-2-6.2">
+          <p id="section-2-6.2.1">It may result in unnecessary work for the user if they need to complete some
+preliminary auth steps in order to reach the error state (e.g. sign in or
+account selection for authorization servers that support multiple login).<a href="#section-2-6.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-1-7.3">
-          <p id="section-1-7.3.1">invalid_grant is semantically the wrong error code for many error conditions.<a href="#section-1-7.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-2-6.3">
+          <p id="section-2-6.3.1">invalid_grant is semantically the wrong error code for many error
+conditions.<a href="#section-2-6.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-1-8">This specification extends OAuth to allow for authorization servers and resource
-servers to return an extra parameter which can be passed back to the authorization
-server when the user is present in order to provide a richer error experience
-which may even allow for recovery by the user.<a href="#section-1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions-and-definitions">
-<section id="section-2">
+<section id="section-3">
       <h2 id="name-conventions-and-definitions">
-<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
       </h2>
-<p id="section-2-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
+<p id="section-3-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
-appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
+appear in all capitals, as shown here.<a href="#section-3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="error-responses">
-<section id="section-3">
+<section id="section-4">
       <h2 id="name-error-responses">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-error-responses" class="section-name selfRef">Error Responses</a>
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-error-responses" class="section-name selfRef">Error Responses</a>
       </h2>
 <div id="token-endpoint">
-<section id="section-3.1">
+<section id="section-4.1">
         <h3 id="name-token-endpoint">
-<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-token-endpoint" class="section-name selfRef">Token endpoint</a>
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-token-endpoint" class="section-name selfRef">Token endpoint</a>
         </h3>
-<p id="section-3.1-1">TODO: also add access_denied to token endpoint? IMO it should be there but it
-also feels a little "tacked on" here.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.1-2">When returning an error response from the token endpoint, the authorization
-server <span class="bcp14">MAY</span> return an additional parameter with any error code.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-3.1-3">
+<p id="section-4.1-1">When returning an error response from the token endpoint, the authorization
+server <span class="bcp14">MAY</span> return an additional parameter with any error code.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4.1-2">
 <pre>
 error_state
     Indicates that the client SHOULD initiate a new authorization grant flow
-    and add this parameter unmodified as the error_state parameter there.
-</pre><a href="#section-3.1-3" class="pilcrow">¶</a>
+    MUST add this parameter unmodified as the error_state parameter there.
+</pre><a href="#section-4.1-2" class="pilcrow">¶</a>
 </div>
-<p id="section-3.1-4">In this case, error_state is a private contract wholly within the authorization
-server, so its details are out of scope for this specification.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
+<p id="section-4.1-3">In this case, <code>error_state</code> is a private contract wholly within the
+authorization server, so its format requires no specification (though see
+considerations below).<a href="#section-4.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="bearer-authentication-scheme">
-<section id="section-3.2">
+<section id="section-4.2">
         <h3 id="name-bearer-authentication-schem">
-<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-bearer-authentication-schem" class="section-name selfRef">Bearer authentication scheme</a>
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-bearer-authentication-schem" class="section-name selfRef">Bearer authentication scheme</a>
         </h3>
-<p id="section-3.2-1">This specification defines the following WWW-Authenticate auth-param value,
-which may be presented alongside any error code.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-3.2-2">
+<p id="section-4.2-1">This specification defines the following <code>WWW-Authenticate</code> auth-param value,
+which may be presented alongside any error code.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4.2-2">
 <pre>
 error_state
     Indicates that the client SHOULD initiate a new authorization grant flow
-    and add this parameter unmodified as the error_state parameter there.
-</pre><a href="#section-3.2-2" class="pilcrow">¶</a>
+    MUST add this parameter unmodified as the error_state parameter there.
+</pre><a href="#section-4.2-2" class="pilcrow">¶</a>
 </div>
-<p id="section-3.2-3">Typically error_state would be obtained from the authorization server as part
-of access token validation, in which case error_state is again a private contract
-wholly within the authorization server. If access tokens are statelessly validated
-(e.g. using an authorization server public key), then any error other than
-"invalid credential" could only come from the resource server, and the
-authorization server will need to understand the error_state generated by the
-resource server. Due to the diverse nature of potential errors, the format of a
-resource-server-generated error_state is out of scope for this spec.
-(TODO: Is that fine to put out of scope?)<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.2-3">If access tokens are validated by the authorization server, <code>error_state</code> is a
+private contract wholly within the authorization server and requires no
+specification (though see considerations below).<a href="#section-4.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.2-4">If access tokens are validated directly on the resource server (e.g. using an
+authorization server public key), then the authorization server will need to
+understand the <code>error_state</code> generated by the resource server. It is <span class="bcp14">RECOMMENDED</span>
+to represent <code>error_state</code> as a JWT [RFC7519], and use JSON Web Encryption
+<span>[<a href="#RFC7516" class="cite xref">RFC7516</a>]</span> to encrypt it.<a href="#section-4.2-4" class="pilcrow">¶</a></p>
+<div id="resource-server-errorstate-jwt">
+<section id="section-4.2.1">
+          <h4 id="name-resource-server-error_state">
+<a href="#section-4.2.1" class="section-number selfRef">4.2.1. </a><a href="#name-resource-server-error_state" class="section-name selfRef">Resource server <code>error_state</code> JWT</a>
+          </h4>
+<p id="section-4.2.1-1">If using a JWT to represent <code>error_state</code>, the standard JWT claims <span class="bcp14">MUST</span> be set
+as follows:<a href="#section-4.2.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4.2.1-2.1">
+              <p id="section-4.2.1-2.1.1">typ: "jwt+error"<a href="#section-4.2.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-4.2.1-2.2">
+              <p id="section-4.2.1-2.2.1">iss: Endpoint URL of the resource server endpoint returning the error<a href="#section-4.2.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-4.2.1-2.3">
+              <p id="section-4.2.1-2.3.1">aud: Authorization server issuer as defined by its metadata endpoint
+<span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span><a href="#section-4.2.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-4.2.1-2.4">
+              <p id="section-4.2.1-2.4.1">sub: Identifier of the user whose access token triggered the error<a href="#section-4.2.1-2.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-4.2.1-2.5">
+              <p id="section-4.2.1-2.5.1">iat: Issue time<a href="#section-4.2.1-2.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-4.2.1-2.6">
+              <p id="section-4.2.1-2.6.1">nbf: Not before<a href="#section-4.2.1-2.6.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-4.2.1-2.7">
+              <p id="section-4.2.1-2.7.1">exp: Expiration time, but see considerations below<a href="#section-4.2.1-2.7.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-4.2.1-3">The JWT will contain other custom claims that can be understood by the
+authorization server to display the error, but due to the diverse nature of
+potential errors, it's not possible to enumerate them in a spec.<a href="#section-4.2.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="errorstate-considerations">
-<section id="section-3.3">
+<section id="section-4.3">
         <h3 id="name-error_state-considerations">
-<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-error_state-considerations" class="section-name selfRef">error_state considerations</a>
+<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-error_state-considerations" class="section-name selfRef"><code>error_state</code> considerations</a>
         </h3>
-<p id="section-3.3-1">If the client is not running in a context where it can initiate an authorization
-grant flow (e.g. a workflow running on some cloud VM), it <span class="bcp14">MAY</span> transmit the
-error_state parameter to the system that can.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
-<p id="section-3.3-2">It is <span class="bcp14">RECOMMENDED</span> that error_state be opaque to the client, though clients <span class="bcp14">MUST NOT</span> introspect the parameter regardless. If error_state contains any user data,
-it <span class="bcp14">MUST</span> be encrypted. It is <span class="bcp14">RECOMMENDED</span> that error_state contains a timestamp
-and the authorization server defines a reasonable timeframe in
-which it must be used. The authorization server <span class="bcp14">MUST</span> ignore an expired error_state
-parameter (though it is entirely possible that the same error will be re-encountered
-during a fresh authorization grant flow).<a href="#section-3.3-2" class="pilcrow">¶</a></p>
-<p id="section-3.3-3">(TODO: Probably gonna delete this paragraph. Limited upside and huge downside.)
-error_state <span class="bcp14">MAY</span> contain a user identifier which can be used to display a personalized
-error page even if the user is not already signed into the authorization server,
-but it <span class="bcp14">MUST NOT</span> be usable to access any user data or take any user account action
-that is not within the scope of the originally issued refresh token. (Doing otherwise
-would allow privilege escalation for applications.)<a href="#section-3.3-3" class="pilcrow">¶</a></p>
-<p id="section-3.3-4">The authorization server and resource server <span class="bcp14">MAY</span> use error_state to represent both recoverable and
-non-recoverable errors. Examples of recoverable errors could include step-up
-auth or re-acknowledgment of updated terms of service. Examples of non-recoverable
-errors could include account or API disables where the authorization server needs
-to communicate some information to the user.<a href="#section-3.3-4" class="pilcrow">¶</a></p>
-<p id="section-3.3-5">It is <span class="bcp14">NOT RECOMMENDED</span> to distinguish between recoverable and non-recoverable
-errors to the client, as it potentially leaks sensitive information to the client.
-(Signals that should be shared for security and abuse reasons should use the
-protocols defined in [OpenID SSF].)<a href="#section-3.3-5" class="pilcrow">¶</a></p>
-<p id="section-3.3-6">[The same normative language applies here too. Do I copy-paste?]<a href="#section-3.3-6" class="pilcrow">¶</a></p>
+<p id="section-4.3-1">It is <span class="bcp14">RECOMMENDED</span> that <code>error_state</code> be opaque to the client, though clients
+<span class="bcp14">MUST NOT</span> introspect the parameter regardless. If <code>error_state</code> contains any user
+data, it <span class="bcp14">MUST</span> be encrypted. It is <span class="bcp14">RECOMMENDED</span> that <code>error_state</code> contains a
+timestamp and the authorization server defines a reasonable timeframe in which
+it must be used. Given that there may be some human-introduced delay before
+<code>error_state</code> is sent to the authorization endpoint and the expected lack of
+sensitivity of the <code>error_state</code> parameter, it is <span class="bcp14">RECOMMENDED</span> that the
+expiration timestamp be at least 1 day.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+<p id="section-4.3-2">The authorization server and resource server <span class="bcp14">MAY</span> use <code>error_state</code> to represent
+both recoverable and non-recoverable errors. Examples of recoverable errors
+could include step-up auth or re-acknowledgment of updated terms of service.
+Examples of non-recoverable errors could include account or API disables where
+the authorization server needs to communicate some information to the user.<a href="#section-4.3-2" class="pilcrow">¶</a></p>
+<p id="section-4.3-3">It is <span class="bcp14">NOT RECOMMENDED</span> to distinguish between recoverable and non-recoverable
+errors to the client, as it potentially leaks sensitive information to the
+client. (Signals that should be shared for security and abuse reasons should use
+the protocols defined in [OpenID SSF].)<a href="#section-4.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
+<div id="new-error-codes">
+<section id="section-4.4">
+        <h3 id="name-new-error-codes">
+<a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-new-error-codes" class="section-name selfRef">New error codes</a>
+        </h3>
+<p id="section-4.4-1">This specification additionally defines the <code>access_denied</code> error code for
+the token endpoint and resource servers, as an error code that may be more
+appropriate in some cases where <code>error_state</code> is returned.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4.4-2">
+<pre>
+access_denied
+    Indicates that the request could not be completed, despite being
+    well-formed and properly authenticated. This error code MUST be returned
+    as an HTTP 403.
+</pre><a href="#section-4.4-2" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="authorization-grant-request">
+<section id="section-5">
+      <h2 id="name-authorization-grant-request">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-authorization-grant-request" class="section-name selfRef">Authorization Grant Request</a>
+      </h2>
+<p id="section-5-1">If the client is not running in a context where it can initiate an authorization
+grant flow (e.g. a workflow running on some cloud VM), it <span class="bcp14">MAY</span> transmit the
+<code>error_state</code> parameter to the system that can.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">Authorization servers that support <code>error_state</code> <span class="bcp14">MUST</span> support at least one of
+the following to avoid sending long encrypted parameters in the URL:<a href="#section-5-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5-3.1">
+          <p id="section-5-3.1.1">HTTP POST requests to the authorization grant flow<a href="#section-5-3.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-5-3.2">
+          <p id="section-5-3.2.1">Pushed authorization requests <span>[<a href="#RFC9126" class="cite xref">RFC9126</a>]</span><a href="#section-5-3.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-5-4">The authorization server <span class="bcp14">MUST</span> ignore an expired <code>error_state</code> parameter (though
+it is entirely possible that the same error will be re-encountered during a
+fresh authorization grant flow).<a href="#section-5-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-considerations">
-<section id="section-4">
+<section id="section-6">
       <h2 id="name-security-considerations">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-4-1">TODO Security
+<p id="section-6-1">TODO Security
 TODO Risk of attaching error_state to URL for different user.
 TODO emails
-TODO why no whole URL?<a href="#section-4-1" class="pilcrow">¶</a></p>
+TODO why no whole URL?<a href="#section-6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
-<section id="section-5">
+<section id="section-7">
       <h2 id="name-iana-considerations">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-5-1">TODO IANA<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-7-1">TODO IANA<a href="#section-7-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-normative-references">
-<section id="section-6">
+<section id="section-8">
       <h2 id="name-normative-references">
-<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
       </h2>
 <dl class="references">
 <dt id="RFC2119">[RFC2119]</dt>
@@ -1389,9 +1481,21 @@ TODO why no whole URL?<a href="#section-4-1" class="pilcrow">¶</a></p>
       <dd>
 <span class="refAuthor">Jones, M.</span> and <span class="refAuthor">D. Hardt</span>, <span class="refTitle">"The OAuth 2.0 Authorization Framework: Bearer Token Usage"</span>, <span class="seriesInfo">RFC 6750</span>, <span class="seriesInfo">DOI 10.17487/RFC6750</span>, <time datetime="2012-10" class="refDate">October 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6750">https://www.rfc-editor.org/rfc/rfc6750</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC7516">[RFC7516]</dt>
+      <dd>
+<span class="refAuthor">Jones, M.</span> and <span class="refAuthor">J. Hildebrand</span>, <span class="refTitle">"JSON Web Encryption (JWE)"</span>, <span class="seriesInfo">RFC 7516</span>, <span class="seriesInfo">DOI 10.17487/RFC7516</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7516">https://www.rfc-editor.org/rfc/rfc7516</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
-    <dd>
+      <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8414">[RFC8414]</dt>
+      <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Sakimura, N.</span>, and <span class="refAuthor">J. Bradley</span>, <span class="refTitle">"OAuth 2.0 Authorization Server Metadata"</span>, <span class="seriesInfo">RFC 8414</span>, <span class="seriesInfo">DOI 10.17487/RFC8414</span>, <time datetime="2018-06" class="refDate">June 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8414">https://www.rfc-editor.org/rfc/rfc8414</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9126">[RFC9126]</dt>
+    <dd>
+<span class="refAuthor">Lodderstedt, T.</span>, <span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Sakimura, N.</span>, <span class="refAuthor">Tonge, D.</span>, and <span class="refAuthor">F. Skokan</span>, <span class="refTitle">"OAuth 2.0 Pushed Authorization Requests"</span>, <span class="seriesInfo">RFC 9126</span>, <span class="seriesInfo">DOI 10.17487/RFC9126</span>, <time datetime="2021-09" class="refDate">September 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9126">https://www.rfc-editor.org/rfc/rfc9126</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
