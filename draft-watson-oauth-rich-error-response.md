@@ -3,7 +3,7 @@ title: "Rich OAuth Error Responses"
 abbrev: "Rich OAuth Error Responses"
 category: info
 
-docname: draft-watson-oauth-error-latest
+docname: draft-watson-oauth-rich-error-response-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
@@ -20,7 +20,7 @@ venue:
   mail: "oauth@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/oauth/"
   github: "njwatson32/oauth-error"
-  latest: "https://njwatson32.github.io/oauth-error/draft-watson-oauth-error.html"
+  latest: "https://njwatson32.github.io/oauth-error/draft-watson-oauth-rich-error-response.html"
 
 author:
  -
