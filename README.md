@@ -4,12 +4,12 @@
 
 This is the working area for the individual Internet-Draft, "Rich OAuth Error Responses".
 
-* [Editor's Copy](https://njwatson32.github.io/oauth-error/#go.draft-watson-oauth-error.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-watson-oauth-error)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-watson-oauth-error)
-* [Compare Editor's Copy to Individual Draft](https://njwatson32.github.io/oauth-error/#go.draft-watson-oauth-error.diff)
+* [Editor's Copy](https://njwatson32.github.io/oauth-error/#go.draft-watson-oauth-rich-error-response.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-watson-oauth-rich-error-response)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-watson-oauth-rich-error-response)
+* [Compare Editor's Copy to Individual Draft](https://njwatson32.github.io/oauth-error/#go.draft-watson-oauth-rich-error-response.diff)
 
-
+draft-watson-oauth-rich-error-response
 ## Contributing
 
 See the
