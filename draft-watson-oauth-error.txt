@@ -4,8 +4,8 @@
 
 Web Authorization Protocol                                     N. Watson
 Internet-Draft                                               Google, LLC
-Intended status: Informational                              24 June 2025
-Expires: 26 December 2025
+Intended status: Informational                               1 July 2025
+Expires: 2 January 2026
 
 
                        Rich OAuth Error Responses
@@ -16,7 +16,7 @@ Abstract
    Define an error-handling protocol extension for the OAuth 2.0 token
    endpoint that allows the authorization server or resource server to
    specify an extra parameter on error responses that should be passed
-   through to followup authorization requests.
+   through to follow-up authorization requests.
 
 About This Document
 
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 December 2025.
+   This Internet-Draft will expire on 2 January 2026.
 
 Copyright Notice
 
@@ -79,8 +79,11 @@ Table of Contents
      4.4.  New error codes
    5.  Authorization Grant Request
    6.  Security Considerations
-   7.  IANA Considerations
-   8.  Normative References
+   7.  Privacy Considerations
+   8.  IANA Considerations
+     8.1.  OAuth Parameters Registration
+       8.1.1.  Registry Contents
+   9.  Normative References
    Acknowledgments
    Author's Address
 
@@ -168,7 +171,8 @@ Table of Contents
 
 error_state
     Indicates that the client SHOULD initiate a new authorization grant flow
-    MUST add this parameter unmodified as the error_state parameter there.
+    and add this parameter as the error_state parameter there. The client
+    MUST NOT modify or introspect the error_state parameter.
 
    In this case, error_state is a private contract wholly within the
    authorization server, so its format requires no specification (though
@@ -179,12 +183,13 @@ error_state
    This specification defines the following WWW-Authenticate auth-param
    value, which may be presented alongside any error code.
 
-error_state
-    Indicates that the client SHOULD initiate a new authorization grant flow
-    MUST add this parameter unmodified as the error_state parameter there.
+error_body
+    A boolean indicating that the client SHOULD initiate a new authorization
+    grant flow and add the response body as the error_state parameter there.
+    The client MUST NOT modify or introspect the error response body.
 
-   If access tokens are validated by the authorization server,
-   error_state is a private contract wholly within the authorization
+   If access tokens are validated by the authorization server, the error
+   response body is a private contract wholly within the authorization
    server and requires no specification (though see considerations
    below).
 
@@ -199,7 +204,7 @@ error_state
    If using a JWT to represent error_state, the standard JWT claims MUST
    be set as follows:
 
-   *  typ: "jwt+error"
+   *  typ: "error+jwt"
 
    *  iss: Endpoint URL of the resource server endpoint returning the
       error
@@ -218,7 +223,7 @@ error_state
    The JWT will contain other custom claims that can be understood by
    the authorization server to display the error, but due to the diverse
    nature of potential errors, it's not possible to enumerate them in a
-   spec.
+   spec.  Authorization servers MUST ignore unknown claims.
 
 4.3.  error_state considerations
 
@@ -276,14 +281,45 @@ access_denied
 
 6.  Security Considerations
 
-   TODO Security TODO Risk of attaching error_state to URL for different
-   user.  TODO emails TODO why no whole URL?
+   The resource server could in theory return an entire authorization
+   URL that the client should follow, but doing so could allow a
+   compromised resource server to direct the user to a malicious
+   authorization server that would phish or steal user credentials.
+   Returning just the error_state parameter prevents this as clients are
+   responsible for targeting the correct authorization endpoint.
 
-7.  IANA Considerations
+   TODO Risk of attaching error_state to URL for different user.
 
-   TODO IANA
+   TODO Guidance on background-running clients that need to notify the
+   user.  Don't want to train users to click on authz links.
 
-8.  Normative References
+7.  Privacy Considerations
+
+   Encrypting the error_state parameter allows the authorization and
+   resource servers to embed additional user data into the parameter
+   that should not be visible to clients.  For example, unencrypted, a
+   server couldn't reveal in the error that access was denied because
+   the user is underage.  However, encrypted (and salted), there's no
+   problem plumbing an under_age flag to the authorization server.
+
+8.  IANA Considerations
+
+8.1.  OAuth Parameters Registration
+
+   This specification registers the following OAuth parameter
+   definitions in the IANA OAuth Parameters registry.
+
+8.1.1.  Registry Contents
+
+   *  Name: error_state
+
+      -  Parameter Usage Location: authorization request, token response
+
+      -  Change Controller: IETF
+
+      -  Reference: This document
+
+9.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
