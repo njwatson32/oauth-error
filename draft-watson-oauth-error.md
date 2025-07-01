@@ -43,7 +43,7 @@ informative:
 
 Define an error-handling protocol extension for the OAuth 2.0 token endpoint
 that allows the authorization server or resource server to specify an extra
-parameter on error responses that should be passed through to followup
+parameter on error responses that should be passed through to follow-up
 authorization requests.
 
 
@@ -53,9 +53,9 @@ authorization requests.
 
 OAuth 2.0 [RFC6749] and [RFC6750] define several different error codes that
 authorization servers and resource servers may return. On token endpoint calls,
-most most runtime errors are lumped into invalid_grant, with the rest of the
+most most runtime errors are lumped into `invalid_grant`, with the rest of the
 errors indicating a coding or configuration error by the client. Similarly,
-invalid_token covers most runtime errors on resource server calls.
+`invalid_token` covers most runtime errors on resource server calls.
 
 Given the changing security, privacy, and regulatory landscapes since OAuth 2.0
 was released, many authorization servers have new types of error conditions,
@@ -82,14 +82,14 @@ However, in circumstances where data used for access control is changed out of
 band, these errors could result in failures at refresh token exchange or access
 token usage. In this situation, the error codes defined by the original OAuth
 2.0 spec are insufficiently expressive to address these different error
-scenarios. The error_description parameter also cannot cover errors that:
+scenarios. The `error_description` parameter also cannot cover errors that:
 
 *   Need to display richer detail (e.g. explain to user why account is blocked)
 *   Contain sensitive data (e.g. account has been flagged as underage)
 
 Because the user is not always be present when the client receives an error from
 the authorization or resource server, there needs to be some way to preserve
-error state until the user is present again. Simply returning invalid_grant so
+error state until the user is present again. Simply returning `invalid_grant` so
 that the client reattempts the authorization flow has a few downsides:
 
 *   Some clients may not automatically restart authorization and instead render
@@ -98,7 +98,7 @@ that the client reattempts the authorization flow has a few downsides:
 *   It may result in unnecessary work for the user if they need to complete some
     preliminary auth steps in order to reach the error state (e.g. sign in or
     account selection for authorization servers that support multiple login).
-*   invalid_grant is semantically the wrong error code for many error
+*   `invalid_grant` is semantically the wrong error code for many error
     conditions.
 
 # Conventions and Definitions
@@ -114,7 +114,8 @@ server MAY return an additional parameter with any error code.
 
     error_state
         Indicates that the client SHOULD initiate a new authorization grant flow
-        MUST add this parameter unmodified as the error_state parameter there.
+        and add this parameter as the error_state parameter there. The client
+        MUST NOT modify or introspect the error_state parameter.
 
 In this case, `error_state` is a private contract wholly within the
 authorization server, so its format requires no specification (though see
@@ -125,13 +126,14 @@ considerations below).
 This specification defines the following `WWW-Authenticate` auth-param value,
 which may be presented alongside any error code.
 
-    error_state
-        Indicates that the client SHOULD initiate a new authorization grant flow
-        MUST add this parameter unmodified as the error_state parameter there.
+    error_body
+        A boolean indicating that the client SHOULD initiate a new authorization
+        grant flow and add the response body as the error_state parameter there.
+        The client MUST NOT modify or introspect the error response body.
 
-If access tokens are validated by the authorization server, `error_state` is a
-private contract wholly within the authorization server and requires no
-specification (though see considerations below).
+If access tokens are validated by the authorization server, the error response
+body is a private contract wholly within the authorization server and requires
+no specification (though see considerations below).
 
 If access tokens are validated directly on the resource server (e.g. using an
 authorization server public key), then the authorization server will need to
@@ -144,7 +146,7 @@ to represent `error_state` as a JWT [RFC7519], and use JSON Web Encryption
 If using a JWT to represent `error_state`, the standard JWT claims MUST be set
 as follows:
 
-*   typ: "jwt+error"
+*   typ: "error+jwt"
 *   iss: Endpoint URL of the resource server endpoint returning the error
 *   aud: Authorization server issuer as defined by its metadata endpoint
     [RFC8414]
@@ -155,7 +157,8 @@ as follows:
 
 The JWT will contain other custom claims that can be understood by the
 authorization server to display the error, but due to the diverse nature of
-potential errors, it's not possible to enumerate them in a spec.
+potential errors, it's not possible to enumerate them in a spec. Authorization
+servers MUST ignore unknown claims.
 
 ## `error_state` considerations
 
@@ -208,15 +211,39 @@ fresh authorization grant flow).
 
 # Security Considerations
 
-TODO Security
-TODO Risk of attaching error_state to URL for different user.
-TODO emails
-TODO why no whole URL?
+The resource server could in theory return an entire authorization URL that the
+client should follow, but doing so could allow a compromised resource server to
+direct the user to a malicious authorization server that would phish or steal
+user credentials. Returning just the `error_state` parameter prevents this as
+clients are responsible for targeting the correct authorization endpoint.
 
+TODO Risk of attaching error_state to URL for different user.
+
+TODO Guidance on background-running clients that need to notify the user. Don't
+want to train users to click on authz links.
+
+# Privacy Considerations
+
+Encrypting the `error_state` parameter allows the authorization and resource
+servers to embed additional user data into the parameter that should not be
+visible to clients. For example, unencrypted, a server couldn't reveal in the
+error that access was denied because the user is underage. However, encrypted
+(and salted), there's no problem plumbing an `under_age` flag to the
+authorization server.
 
 # IANA Considerations
 
-TODO IANA
+## OAuth Parameters Registration
+
+This specification registers the following OAuth parameter definitions in the
+IANA OAuth Parameters registry.
+
+### Registry Contents
+
+*   Name: error_state
+    *   Parameter Usage Location: authorization request, token response
+    *   Change Controller: IETF
+    *   Reference: This document
 
 
 --- back
