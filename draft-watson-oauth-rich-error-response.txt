@@ -9,7 +9,7 @@ Expires: 2 January 2026
 
 
                        Rich OAuth Error Responses
-                    draft-watson-oauth-error-latest
+             draft-watson-oauth-rich-error-response-latest
 
 Abstract
 
@@ -23,9 +23,10 @@ About This Document
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://njwatson32.github.io/oauth-error/draft-watson-oauth-
-   error.html.  Status information for this document may be found at
-   https://datatracker.ietf.org/doc/draft-watson-oauth-error/.
+   https://njwatson32.github.io/oauth-error/draft-watson-oauth-rich-
+   error-response.html.  Status information for this document may be
+   found at https://datatracker.ietf.org/doc/draft-watson-oauth-rich-
+   error-response/.
 
    Discussion of this document takes place on the Web Authorization
    Protocol Working Group mailing list (mailto:oauth@ietf.org), which is
