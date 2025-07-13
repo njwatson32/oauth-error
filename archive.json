@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-10T01:45:43.925895+00:00",
+  "timestamp": "2025-07-13T01:55:57.412391+00:00",
   "repo": "njwatson32/oauth-error",
   "labels": [
     {
@@ -78,9 +78,31 @@
       "labels": [],
       "body": "- error_state is not an OAuth request parameter, further elaboration is required to define it as such.\n- Token endpoint: Why use the client to store error_state and replay it into the new request?\n  - It might contain sensitive data\n  - Requires protection against manipulation\n  - Also the state in AS might have changed by the time a new request is placed\n  - Isn't it better that AS shall evaluate new requests based on the most updated state of user account, its permissions and the policies in place regarding client?\n- Resource server:\n  - error_state as JWT whose audience is the AS, requires a trust framework enabling AS can trust the RS\n  - Client should not process error_state so doesn't know what failed and whether it is recoverable, not the best \"client experience\"\n  - Initiating a new OAuth grant might also be rejected, bestowing upon the AS the role to explain to end-user what went wrong. That sounds like a good solution preserving user's privacy, for errors in the AS' domain. But what if the reason is NOT in AS' domain but known only to RS? for example temporal (requested service will be available later) or an access policy of RS not met, which AS knows nothing about\n  - We've (https://www.ietf.org/archive/id/draft-lombardo-oauth-step-up-authz-challenge-proto-02.html) also discussed the idea that RS shall indicate to client missing authorization data, such as scope or RAR authorization details, so that client makes a new modified OAuth request. But to this end, the audience of RS's response is the client\n  - Note: We've also contemplated the question of distinguishing recoverable and non-recoverable errors, or as we called it \"instructive\" (instructing client as to how to form the next OAuth request) and \"informative\" errors, and also decided to combine them in one response",
       "createdAt": "2025-07-02T11:16:20Z",
-      "updatedAt": "2025-07-02T11:16:20Z",
+      "updatedAt": "2025-07-11T21:58:20Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "njwatson32",
+          "authorAssociation": "OWNER",
+          "body": "Re: token endpoint:\n\n- Any error_state that contains sensitive data must be encrypted. It can get privacy and integrity using symmetric encryption given that it's just the AS that needs to understand it. (Or it can just store something server-side and return a short key which contains no info at all.)\n- If there's no error_state, there at least needs to be an error code other than invalid_grant that tells the client \"you should automatically restart the authz flow at your earliest convenience\" (rather than reverting to signed out state). Propagating error_state is an optimization that can potentially save the user some clicks/typing when they reenter the authz flow. This is detailed somewhat at the bottom of \"Motivating Use Cases\".\n\nRe: resource server:\n\nI'll confess (which you may already know) that for Google (human users, at least) the AS and RS are in the same trust domain, so I was trying to extrapolate to what might be needed in systems where that's not the case. With that in mind,\n\n- Is it not typical that an AS would have the RS public key? Presumably there must be some sort of registration process in order for an AS to issue access tokens usable at the RS. Regardless of whether RS returns a signed/encrypted blob that the client propagates through or whether the RS returns readable values that the client can use to form its new AS request, at some level the AS is acting on directions from the RS. \n- I explicitly consider it a feature that the client cannot inspect error state. I can guarantee that if an RS returns an error tagged as \"unrecoverable\", a significant percent of clients will swallow that error rather than redirecting to the AS, and this will be bad for the user as they will get no information about why the call failed. Also as mentioned recoverable vs unrecoverable could occasionally be a small data leakage if the client has an idea of when the RS might return an error (e.g. \"the only reason this API call can fail unrecoverably is if the user is underage\")\n- If the error is in the RS domain and not something the AS can help with, then returning error_state is not what the RS should do. This spec neither helps nor hinders that case. However, that case doesn't seem easily standardizable. RS can always document whatever it wants for its own error responses. My impression is that contracts between AS and RS are much easier to deploy than contracts between RS and client, because typically count(AS) >> count(RS) >> count(client).\n\nIn general a lot of my opinions about these types of protocols are informed by having spent years running an AS and dealing with misbehaving clients who don't follow the spec and treat any visible response entropy as the API. Because \"having the moral high ground\" loses to \"the customer is always right\" every time (sigh), I always lean toward designing protocols and APIs to guard against these poorly implemented clients.\n",
+          "createdAt": "2025-07-11T21:00:33Z",
+          "updatedAt": "2025-07-11T21:00:33Z"
+        },
+        {
+          "author": "yaron-zehavi",
+          "authorAssociation": "NONE",
+          "body": "Are you going to be at IETF 123?\nIf so we could meet there and discuss in person. Would be interested in the day to day challenges you've encountered running an AS of this scale.\n\nAre you in the IETF OAuth slack? It's one good way to coordinate",
+          "createdAt": "2025-07-11T21:30:48Z",
+          "updatedAt": "2025-07-11T21:30:48Z"
+        },
+        {
+          "author": "njwatson32",
+          "authorAssociation": "OWNER",
+          "body": "Yes I'll be there. Sent you and Jeff an email.",
+          "createdAt": "2025-07-11T21:58:20Z",
+          "updatedAt": "2025-07-11T21:58:20Z"
+        }
+      ]
     }
   ],
   "pulls": []
